@@ -1,83 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
 
 const AdoptPage = () => {
-  const [pets] = useState([
-    { id: 1, name: 'Buddy', type: 'Dog', breed: 'Golden Retriever', age: 3 },
-    { id: 2, name: 'Whiskers', type: 'Cat', breed: 'Siamese', age: 2 },
-    { id: 3, name: 'Rex', type: 'Dog', breed: 'German Shepherd', age: 5 },
-    { id: 4, name: 'Fluffy', type: 'Cat', breed: 'Persian', age: 4 },
-    { id: 5, name: 'Max', type: 'Dog', breed: 'Labrador', age: 1 },
-    { id: 6, name: 'Luna', type: 'Cat', breed: 'Maine Coon', age: 3 },
-  ]);
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const styles = {
-    container: {
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '20px',
-    },
-    title: {
-      textAlign: 'center',
-      marginBottom: '20px',
-    },
-    petGrid: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-      gap: '20px',
-    },
-    petCard: {
-      border: '1px solid #ddd',
-      borderRadius: '8px',
-      padding: '20px',
-      textAlign: 'center',
-    },
-    petImage: {
-      width: '100%',
-      height: '200px',
-      backgroundColor: '#f0f0f0',
-      marginBottom: '10px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '48px',
-      color: '#999',
-    },
-    button: {
-      display: 'inline-block',
-      padding: '10px 20px',
-      backgroundColor: '#007bff',
-      color: 'white',
-      textDecoration: 'none',
-      borderRadius: '4px',
-      marginTop: '10px',
-    },
-  };
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/products'); // Backend endpoint
+        if (!response.ok) {
+          throw new Error('Failed to fetch pets');
+        }
+        const data = await response.json();
+        setPets(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPets();
+  }, []);
+
+  if (loading) {
+    return <div>Loading pets...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
-      <Header />
-      <div style={styles.container}>
-        <h1 style={styles.title}>Adopt a Pet</h1>
-        <div style={styles.petGrid}>
-          {pets.map((pet) => (
-            <div key={pet.id} style={styles.petCard}>
-              <div style={styles.petImage}>
-                {pet.type === 'Dog' ? '🐶' : '🐱'}
-              </div>
-              <h2>{pet.name}</h2>
-              <p>{pet.breed}</p>
-              <p>Age: {pet.age} years</p>
-              <Link to={`/pet/${pet.id}`} style={styles.button}>Learn More</Link>
+      <h1>Adopt a Pet</h1>
+      <div style={styles.petGrid}>
+        {pets.map((pet) => (
+          <div key={pet._id} style={styles.petCard}>
+            <div style={styles.petImage}>
+              {pet.image ? (
+                <img src={pet.image} alt={pet.name} style={{ width: '100%', height: 'auto' }} />
+              ) : (
+                'No Image Available'
+              )}
             </div>
-          ))}
-        </div>
+            <h3>{pet.name}</h3>
+            <p>{pet.description}</p>
+            <p>Price: ${pet.price}</p>
+            <Link to={`/adopt/${pet._id}`} style={styles.adoptButton}>
+              Adopt Now
+            </Link>
+          </div>
+        ))}
       </div>
-      <Footer />
     </div>
   );
+};
+
+const styles = {
+  petGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+    gap: '20px',
+    padding: '20px',
+  },
+  petCard: {
+    border: '1px solid #ddd',
+    padding: '10px',
+    borderRadius: '8px',
+    textAlign: 'center',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  },
+  petImage: {
+    marginBottom: '10px',
+    height: '200px',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  adoptButton: {
+    display: 'inline-block',
+    padding: '10px 20px',
+    backgroundColor: '#4CAF50',
+    color: '#fff',
+    textDecoration: 'none',
+    borderRadius: '5px',
+    marginTop: '10px',
+  },
 };
 
 export default AdoptPage;
