@@ -3,19 +3,16 @@ const app = express();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-
+const productRoutes = require('./routes/productRoutes');
 const port = process.env.PORT || 4000;
 
-// Define the Users schema
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-  date: { type: Date, default: Date.now },
-});
+
+
+
+
 
 // Create the Users model
-const Users = mongoose.model("Users", userSchema);
+const Users = require('./models/Users');
 
 const router = express.Router();
 
@@ -117,8 +114,12 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+
+
 // Register the Router
 app.use("/", router);
+app.use('/api/products', productRoutes);
 
 // Start the server
 app.listen(port, () => {
