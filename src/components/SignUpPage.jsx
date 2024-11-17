@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -24,6 +27,7 @@ const SignUpPage = () => {
     setIsLoading(true);
     setError('');
 
+    // Check if the passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setIsLoading(false);
@@ -31,18 +35,18 @@ const SignUpPage = () => {
     }
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Form submitted:', formData);
-      alert('Signup successful!');
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+      console.log("HI")
+      const response = await axios.post('http://localhost:4000/signup', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
       });
+      console.log('Signup successful:', response.data);  // Log response
+      navigate('/');  // Redirect after successful signup
     } catch (err) {
       setError('An error occurred. Please try again.');
+      console.error(err);  // Log error for debugging
     } finally {
       setIsLoading(false);
     }

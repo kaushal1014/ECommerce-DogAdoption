@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ const LoginPage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,9 +25,10 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Login submitted:', formData);
+      const response = await axios.post('http://localhost:4000/login', formData);
+      navigate('/');
+      // Handle the response on success
+      console.log('Login successful:', response.data);
       alert('Login successful!');
       setFormData({ email: '', password: '' });
     } catch (err) {
