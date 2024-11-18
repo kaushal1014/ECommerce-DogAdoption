@@ -10,7 +10,7 @@ import PetDetailsPage from './components/PetDetailsPage';
 
 function App() {
   return (
-    <Router>
+   <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
