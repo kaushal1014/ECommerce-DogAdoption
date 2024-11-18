@@ -1,11 +1,11 @@
-// src/components/Footer.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const styles = {
     footer: {
-      backgroundColor: '#f8f8f8',
+      backgroundColor: '#102C3E',
+      color: 'white', 
       padding: '20px',
       marginTop: '40px',
     },
@@ -25,7 +25,7 @@ const Footer = () => {
     },
     link: {
       display: 'block',
-      color: '#333',
+      color: 'white', 
       textDecoration: 'none',
       marginBottom: '5px',
     },
@@ -48,7 +48,6 @@ const Footer = () => {
         <div style={styles.section}>
           <h3 style={styles.title}>Company</h3>
           <Link to="/about" style={styles.link}>About</Link>
-          <Link to="/careers" style={styles.link}>Careers</Link>
           <Link to="/privacy" style={styles.link}>Privacy Policy</Link>
           <Link to="/terms" style={styles.link}>Terms of Service</Link>
         </div>

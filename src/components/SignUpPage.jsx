@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import pawpalLogo from './pawpallogo.jpeg';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -13,13 +14,18 @@ const SignUpPage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked((prev) => !prev); // Toggle the checkbox status
   };
 
   const handleSubmit = async (e) => {
@@ -27,26 +33,30 @@ const SignUpPage = () => {
     setIsLoading(true);
     setError('');
 
-    // Check if the passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setIsLoading(false);
       return;
     }
 
+    if (!isChecked) {
+      setError('Please agree to the terms and conditions and privacy policy.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      console.log("HI")
       const response = await axios.post('http://localhost:4000/signup', {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
       });
-      console.log('Signup successful:', response.data);  // Log response
-      navigate('/');  // Redirect after successful signup
+      console.log('Signup successful:', response.data);
+      navigate('/');
     } catch (err) {
       setError('An error occurred. Please try again.');
-      console.error(err);  // Log error for debugging
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +72,7 @@ const SignUpPage = () => {
     },
     leftPanel: {
       flex: 1,
-      backgroundColor: '#f0f0f0',
+      backgroundColor: '#102C3E',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -75,10 +85,15 @@ const SignUpPage = () => {
       flexDirection: 'column',
       justifyContent: 'center',
     },
+    logoImage: {
+      width: '200px',
+      height: '200px',
+    },
     logo: {
       fontSize: '24px',
       fontWeight: 'bold',
       marginBottom: '20px',
+      color: '#102C3E',
     },
     title: {
       fontSize: '28px',
@@ -121,12 +136,25 @@ const SignUpPage = () => {
       color: '#007bff',
       textDecoration: 'none',
     },
+    checkboxGroup: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      marginBottom: '15px',
+    },
+    checkbox: {
+      width: '20px',
+      height: '20px',
+    },
+    checkboxLabel: {
+      fontSize: '14px',
+    },
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.leftPanel}>
-        <img src="/placeholder.svg" alt="Pawpal Logo" width="200" height="200" />
+        <img src={pawpalLogo} alt="Pawpal Logo" style={styles.logoImage} />
       </div>
       <div style={styles.rightPanel}>
         <div style={styles.logo}>Pawpal</div>
@@ -180,12 +208,24 @@ const SignUpPage = () => {
             required
             style={styles.input}
           />
+          <div style={styles.checkboxGroup}>
+            <input
+              type="checkbox"
+              id="terms"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+              style={styles.checkbox}
+            />
+            <label htmlFor="terms" style={styles.checkboxLabel}>
+              I agree to the <Link to="/terms" style={styles.link}>Terms of Service</Link> and <Link to="/privacy" style={styles.link}>Privacy Policy</Link>
+            </label>
+          </div>
           <button type="submit" style={styles.button} disabled={isLoading}>
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
         <p style={styles.loginLink}>
-          Already have an account? <a href="/login" style={styles.link}>Log in</a>
+          Already have an account? <Link to="/login" style={styles.link}>Log in</Link>
         </p>
       </div>
     </div>

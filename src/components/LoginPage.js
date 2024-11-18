@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import pawpalLogo from './pawpallogo.jpeg'; 
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ const LoginPage = () => {
     },
     leftPanel: {
       flex: 1,
-      backgroundColor: '#f0f0f0',
+      backgroundColor: '#102C3E', 
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -107,7 +108,7 @@ const LoginPage = () => {
   return (
     <div style={styles.container}>
       <div style={styles.leftPanel}>
-        <img src="/placeholder.svg" alt="Pawpal Logo" width="200" height="200" />
+        <img src={pawpalLogo} alt="Pawpal Logo" width="200" height="200" /> 
       </div>
       <div style={styles.rightPanel}>
         <div style={styles.logo}>Pawpal</div>

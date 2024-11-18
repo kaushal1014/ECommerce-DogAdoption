@@ -7,10 +7,12 @@ import ContactUsPage from './components/ContactUsPage';
 import AboutUsPage from './components/AboutUsPage';
 import AdoptPage from './components/AdoptPage';
 import PetDetailsPage from './components/PetDetailsPage';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
+import TermsOfServicePage from './components/TermsOfServicePage';
 
 function App() {
   return (
-   <Router>
+    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
@@ -19,6 +21,8 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/adopt" element={<AdoptPage />} />
         <Route path="/adopt/:id" element={<PetDetailsPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsOfServicePage />} />
       </Routes>
     </Router>
   );
