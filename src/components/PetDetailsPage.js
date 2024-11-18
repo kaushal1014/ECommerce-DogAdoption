@@ -39,7 +39,11 @@ const PetDetailsPage = () => {
       <h1>{pet.name}</h1>
       <div>
         {pet.image ? (
-          <img src={pet.image} alt={pet.name} style={{ width: '100%', height: 'auto' }} />
+          <img
+          src={`http://localhost:4000/${pet.image}`} 
+          alt={pet.name}
+          style={{ width: '10%', height: 'auto' }}
+        />
         ) : (
           <p>No image available</p>
         )}

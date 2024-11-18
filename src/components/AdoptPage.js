@@ -41,7 +41,11 @@ const AdoptPage = () => {
           <div key={pet._id} style={styles.petCard}>
             <div style={styles.petImage}>
               {pet.image ? (
-                <img src={pet.image} alt={pet.name} style={{ width: '100%', height: 'auto' }} />
+                <img
+                src={`http://localhost:4000/${pet.image}`} 
+                alt={pet.name}
+                style={{ width: '100%', height: 'auto' }}
+              />
               ) : (
                 'No Image Available'
               )}
