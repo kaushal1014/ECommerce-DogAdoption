@@ -3,37 +3,57 @@ const app = express();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
+const path = require('path'); // Required for multer storage
+const multer = require('multer'); // Required for image upload
 const productRoutes = require('./routes/productRoutes');
+const Users = require('./models/Users');
 const port = process.env.PORT || 4000;
 
-
-
-
-
-
-// Create the Users model
-const Users = require('./models/Users');
-
-const router = express.Router();
-
-// Middleware
+// Middleware setup for CORS and JSON parsing
 app.use(cors({
   origin: 'http://localhost:3000', // Allow frontend to communicate
   methods: ['GET', 'POST'],
   credentials: true, // If you need cookies or sessions
 }));
 
-// Middleware to parse JSON bodies
-app.use(express.json()); // <-- This is necessary to parse the incoming JSON request body
 
-// Database Connection with MongoDB
+
+app.use(express.json()); // Parse incoming JSON request bodies
+//app.use('/', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  // Check if this points to the correct folder
+
+// Set up multer storage and file filter for image upload
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: (req, file, cb) => {
+    return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  // Accept only image files
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Invalid file type, only images are allowed!'), false);
+  }
+};
+
+const upload = multer({ storage, fileFilter }); // Initialize multer with storage and filter
+
+// MongoDB connection
 mongoose
   .connect("mongodb://localhost:27017/e-commerce")
   .then(() => console.log("Connected to MongoDB successfully."))
   .catch((err) => console.error("Failed to connect to MongoDB:", err));
 
-// Define Routes
+// Define routes
+const router = express.Router();
+
+// Basic test routes
 router.get("/", async (req, res) => {
+  console.log(path.join(__dirname, 'uploads')); 
   return res.send("Hi");
 });
 
@@ -44,30 +64,25 @@ router.get("/signup", async (req, res) => {
 // Signup Route
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  console.log(req.body); // Log the body to check if it's being received properly
 
-  // Check if all required fields are provided
+  // Validate input
   if (!firstName || !lastName || !email || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Check if the email is in a valid format (optional)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: "Invalid email format" });
   }
 
   try {
-    // Check if the user already exists
     const existingUser = await Users.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already registered" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create and save the user
     const newUser = new Users({
       name: `${firstName} ${lastName}`,
       email,
@@ -85,40 +100,33 @@ router.post("/signup", async (req, res) => {
 // Login Route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body); // Log the body to check if it's being received properly
 
-  // Check if email and password are provided
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
   try {
-    // Find the user by email
     const user = await Users.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    // Compare the hashed password with the provided password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    // Send a success response (you can add a token here if you want)
     res.status(200).json({ message: "Login successful!" });
-
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-
-
-
-// Register the Router
+// Register the router for the API routes
 app.use("/", router);
+
+// Product routes with image upload
 app.use('/api/products', productRoutes);
 
 // Start the server
