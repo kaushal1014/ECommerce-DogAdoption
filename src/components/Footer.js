@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   const styles = {
     footer: {
-      backgroundColor: '#102C3E',
-      color: 'white', 
+      backgroundColor: '#102C3E', // Matches the theme
+      color: '#ffffff', // White text for contrast
       padding: '20px',
       marginTop: '40px',
     },
@@ -25,7 +25,7 @@ const Footer = () => {
     },
     link: {
       display: 'block',
-      color: 'white', 
+      color: '#ffffff',
       textDecoration: 'none',
       marginBottom: '5px',
     },
@@ -50,6 +50,7 @@ const Footer = () => {
           <Link to="/about" style={styles.link}>About</Link>
           <Link to="/privacy" style={styles.link}>Privacy Policy</Link>
           <Link to="/terms" style={styles.link}>Terms of Service</Link>
+          <Link to="/donations" style={styles.link}>Donations</Link>
         </div>
         <div style={styles.section}>
           <h3 style={styles.title}>Connect with us</h3>
