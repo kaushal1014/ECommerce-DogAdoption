@@ -112,6 +112,14 @@ const HomePage = () => {
           <div style={styles.featuresGrid}>
             <div style={styles.featureBox}>
               <div style={styles.featureIcon}>
+                <Box size={24} />
+              </div>
+              <h2 style={styles.featureTitle}>Discover Pets That Match Your Preferences</h2>
+              <p style={styles.featureDescription}>Tailor your search to find your ideal match.</p>
+            </div>
+
+            <div style={styles.featureBox}>
+              <div style={styles.featureIcon}>
                 <Filter size={24} />
               </div>
               <h2 style={styles.featureTitle}>Easily Filter Pets by Type</h2>
@@ -120,14 +128,6 @@ const HomePage = () => {
                 <Link to="/adopt" style={styles.primaryButton}>Search</Link>
                 <Link to="/adopt" style={styles.secondaryButton}>Explore</Link>
               </div>
-            </div>
-
-            <div style={styles.featureBox}>
-              <div style={styles.featureIcon}>
-                <Box size={24} />
-              </div>
-              <h2 style={styles.featureTitle}>Discover Pets That Match Your Preferences</h2>
-              <p style={styles.featureDescription}>Tailor your search to find your ideal match.</p>
             </div>
 
             <div style={styles.featureBox}>
