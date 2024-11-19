@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
@@ -134,7 +135,7 @@ const AdoptPage = () => {
               <h3 style={styles.petName}>{pet.name}</h3>
               <p style={styles.petDescription}>{pet.description}</p>
               <p style={styles.petPrice}>Price: ${pet.price}</p>
-              <Link to={`PetDetails`} style={styles.adoptButton}>
+              <Link to={`/adopt/${pet._id}`} style={styles.adoptButton}>
                 Learn More
               </Link>
             </div>

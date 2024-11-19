@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import axios from 'axios';
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -20,11 +21,20 @@ const ContactUsPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    // Here you would typically send the form data to a server
-    alert('Message sent! We will get back to you soon.');
+    try{
+    const response = await axios.post('http://localhost:4000/contact', formData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if(response.status===200)
+      alert('Message sent! We will get back to you soon.');}
+    catch(err){
+      alert(err.message);
+    }
     setFormData({
       firstName: '',
       lastName: '',
