@@ -120,7 +120,7 @@ const PetDetailsPage = () => {
         </div>
         <p style={styles.description}>{pet.description}</p>
         <p style={styles.price}>Price: ${pet.price}</p>
-        <Link to="/adopt" style={styles.adoptButton}>
+        <Link to="/contact" style={styles.adoptButton}>
           Adopt {pet.name}
         </Link>
         <div>
