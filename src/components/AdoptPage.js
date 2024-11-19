@@ -134,7 +134,7 @@ const AdoptPage = () => {
               <h3 style={styles.petName}>{pet.name}</h3>
               <p style={styles.petDescription}>{pet.description}</p>
               <p style={styles.petPrice}>Price: ${pet.price}</p>
-              <Link to={`/Contact`} style={styles.adoptButton}>
+              <Link to={`/adopt/${pet._id}`} style={styles.adoptButton}>
                 Learn More
               </Link>
             </div>
