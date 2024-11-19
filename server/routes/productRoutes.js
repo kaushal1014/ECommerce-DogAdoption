@@ -75,7 +75,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { name, price, description } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : ''; // Set the new image URL if an image is uploaded
+    const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null; // Set the new image URL if an image is uploaded
 
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -83,7 +83,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
         name,
         price,
         description,
-        image: imageUrl, // Update the image URL if a new image is uploaded
+        image: imagePath, // Update the image URL if a new image is uploaded
       },
       { new: true } // Return the updated product
     );
