@@ -17,24 +17,6 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-const storage = multer.diskStorage({
-  destination: './uploads/',
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Invalid file type, only images are allowed!'), false);
-  }
-};
-
-const upload = multer({ storage, fileFilter });
 
 mongoose
   .connect("mongodb://localhost:27017/e-commerce")

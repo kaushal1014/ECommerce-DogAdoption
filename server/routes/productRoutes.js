@@ -1,32 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-
-
 const Product = require('../models/Products');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Invalid file type, only images are allowed!'), false);
-  }
-};
-
-const upload = multer({ storage, fileFilter });
-
-
-router.use('/uploads', express.static(path.join(__dirname, '../uploads'))); 
 
 // Define routes
 router.get('/', async (req, res) => {
@@ -40,12 +16,9 @@ router.get('/', async (req, res) => {
 });
 
 // Add a new product with an image
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-//    if (!req.file) {
-//      return res.status(400).json({ error: 'No image uploaded!' });
-//    }
 
     const name = req.body.name;
     const description = req.body.description;
@@ -54,8 +27,6 @@ router.post('/', upload.single('image'), async (req, res) => {
       return res.status(400).json({ error: 'Name and price are required' });
     }
   
-    // Create the new product with the image path (req.file.path)
-    //const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null;
     const imagePath= req.body.image;
     const newProduct = new Product({
       name:name,
@@ -74,10 +45,9 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 // Update an existing product with an image
-router.put('/:id', upload.single('image'), async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const { name, price, description } = req.body;
-    //const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null; 
     const imagePath= req.body.image;
     console.log("Doing update");
     const updatedProduct = await Product.findByIdAndUpdate(
