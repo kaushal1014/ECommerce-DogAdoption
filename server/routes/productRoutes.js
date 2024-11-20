@@ -43,9 +43,9 @@ router.get('/', async (req, res) => {
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     console.log('Request Body:', req.body);
-    if (!req.file) {
-      return res.status(400).json({ error: 'No image uploaded!' });
-    }
+//    if (!req.file) {
+//      return res.status(400).json({ error: 'No image uploaded!' });
+//    }
 
     const name = req.body.name;
     const description = req.body.description;
@@ -55,8 +55,8 @@ router.post('/', upload.single('image'), async (req, res) => {
     }
   
     // Create the new product with the image path (req.file.path)
-    const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null;
-
+    //const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null;
+    const imagePath= req.body.image;
     const newProduct = new Product({
       name:name,
       description:description,
@@ -77,8 +77,9 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { name, price, description } = req.body;
-    const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null; 
-
+    //const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null; 
+    const imagePath= req.body.image;
+    console.log("Doing update");
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       {
@@ -105,7 +106,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-
+    console.log("Doing delete");
     if (!deletedProduct) {
       return res.status(404).json({ error: 'Product not found' });
     }
