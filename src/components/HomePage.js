@@ -105,7 +105,7 @@ const HomePage = () => {
           <section style={styles.searchSection}>
             <h1 style={styles.searchTitle}>Find Your Perfect Pet in Seconds</h1>
             <p style={styles.searchDescription}>
-              Looking for a furry friend? Our quick search bar allows you to filter pets by type, making it easier than ever to find the companion that fits your lifestyle. Start your journey to pet adoption today!
+              Looking for a furry friend? Our platform makes it easier than ever to find the companion that fits your lifestyle. Start your journey to pet adoption today!
             </p>
           </section>
 
