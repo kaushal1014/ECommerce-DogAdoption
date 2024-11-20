@@ -132,14 +132,6 @@ const HomePage = () => {
 
             <div style={styles.featureBox}>
               <div style={styles.featureIcon}>
-                <Box size={24} />
-              </div>
-              <h2 style={styles.featureTitle}>Discover Pets That Match Your Preferences</h2>
-              <p style={styles.featureDescription}>Look through all the pets in need of a home near you.</p>
-            </div>
-
-            <div style={styles.featureBox}>
-              <div style={styles.featureIcon}>
                 <Search size={24} />
               </div>
               <h2 style={styles.featureTitle}>Start Your Search for a New Friend</h2>
