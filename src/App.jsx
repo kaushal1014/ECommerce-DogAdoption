@@ -10,6 +10,7 @@ import PetDetailsPage from './components/PetDetailsPage';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import TermsOfServicePage from './components/TermsOfServicePage';
 import DonationsPage from './components/DonationsPage'; 
+import ProductManagement from './components/ProductManagement';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/adopt/:id" element={<PetDetailsPage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/terms" element={<TermsOfServicePage />} />
+        <Route path="/product-management" element={<ProductManagement />} />
         <Route path="/donations" element={<DonationsPage />} /> {/* Donations Route */}
       </Routes>
     </Router>
