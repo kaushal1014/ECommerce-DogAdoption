@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 
 // Import controller functions
-const { getAllProducts, addProduct, updateProduct, deleteProduct } = require('../controllers/productController');
 const Product = require('../models/Products'); // Assuming your Product model is here
 
 // Set up multer storage and file filter for image uploads
@@ -32,7 +31,15 @@ const upload = multer({ storage, fileFilter }); // Initialize multer with storag
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));  // Expose '/uploads' to access uploaded images
 
 // Define routes
-router.get('/', getAllProducts); // Get all products
+router.get('/', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
 
 // Add a new product with an image
 router.post('/', upload.single('image'), async (req, res) => {
