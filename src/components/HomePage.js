@@ -122,12 +122,20 @@ const HomePage = () => {
               <div style={styles.featureIcon}>
                 <Filter size={24} />
               </div>
-              <h2 style={styles.featureTitle}>Easily Filter Pets by Type</h2>
+              <h2 style={styles.featureTitle}>Easily Find the pets that you want</h2>
               <p style={styles.featureDescription}>Choose from dogs, cats, and more.</p>
               <div style={styles.buttonGroup}>
                 <Link to="/adopt" style={styles.primaryButton}>Search</Link>
-                <Link to="/adopt" style={styles.secondaryButton}>Explore</Link>
+                <Link to="/Contact" style={styles.secondaryButton}>Queries</Link>
               </div>
+            </div>
+
+            <div style={styles.featureBox}>
+              <div style={styles.featureIcon}>
+                <Box size={24} />
+              </div>
+              <h2 style={styles.featureTitle}>Discover Pets That Match Your Preferences</h2>
+              <p style={styles.featureDescription}>Look through all the pets in need of a home near you.</p>
             </div>
 
             <div style={styles.featureBox}>
@@ -135,7 +143,7 @@ const HomePage = () => {
                 <Search size={24} />
               </div>
               <h2 style={styles.featureTitle}>Start Your Search for a New Friend</h2>
-              <p style={styles.featureDescription}>Use our search bar to get started.</p>
+              <p style={styles.featureDescription}>Use our adoption page to get started</p>
             </div>
           </div>
         </div>
