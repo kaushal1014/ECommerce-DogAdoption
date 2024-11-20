@@ -110,7 +110,7 @@ const PetDetailsPage = () => {
         <div style={styles.imageContainer}>
           {pet.image ? (
             <img
-              src={`http://localhost:4000/${pet.image}`}
+              src={`${pet.image}`}
               alt={pet.name}
               style={styles.image}
             />
