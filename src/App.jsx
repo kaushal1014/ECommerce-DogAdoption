@@ -9,7 +9,7 @@ import AdoptPage from './components/AdoptPage';
 import PetDetailsPage from './components/PetDetailsPage';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import TermsOfServicePage from './components/TermsOfServicePage';
-import DonationsPage from './components/DonationsPage'; // Import DonationsPage
+import DonationsPage from './components/DonationsPage'; 
 
 function App() {
   return (

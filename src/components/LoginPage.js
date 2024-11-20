@@ -28,7 +28,6 @@ const LoginPage = () => {
     try {
       const response = await axios.post('http://localhost:4000/login', formData);
       navigate('/');
-      // Handle the response on success
       console.log('Login successful:', response.data);
       alert('Login successful!');
       setFormData({ email: '', password: '' });

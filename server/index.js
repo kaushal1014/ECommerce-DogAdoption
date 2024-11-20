@@ -43,22 +43,12 @@ mongoose
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  console.log(path.join(__dirname, 'uploads'));
-  return res.send("Hi");
-});
-
 
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   if (!firstName || !lastName || !email || !password) {
     return res.status(400).json({ error: "All fields are required" });
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ error: "Invalid email format" });
   }
 
   try {

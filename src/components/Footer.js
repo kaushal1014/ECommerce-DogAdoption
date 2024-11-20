@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   const styles = {
     footer: {
-      backgroundColor: '#102C3E', // Matches the theme
-      color: '#ffffff', // White text for contrast
-      padding: '20px',
+      backgroundColor: '#102C3E', 
+      color: '#ffffff', 
       marginTop: '40px',
     },
     container: {
@@ -55,7 +54,7 @@ const Footer = () => {
         <div style={styles.section}>
           <h3 style={styles.title}>Connect with us</h3>
           <a href="https://facebook.com" style={styles.link}>Facebook</a>
-          <a href="https://instagram.com" style={styles.link}>Instagram</a>
+          <a href="https://www.instagram.com/krishankkureti" style={styles.link}>Instagram</a>
           <a href="https://twitter.com" style={styles.link}>Twitter</a>
           <a href="https://tiktok.com" style={styles.link}>TikTok</a>
         </div>
