@@ -40,3 +40,13 @@ Clone the project repository to your local machine using the following command:
 
    ```bash
    node ./index.js
+
+4. **Run the Client**  
+   Navigate back to the root directory (if you’re not already there) and run the client-side:
+
+   ```bash
+    npm start
+
+Access Product Management
+To manage the dog adoption products, go to the following page after the app is up and running:
+/product-management
