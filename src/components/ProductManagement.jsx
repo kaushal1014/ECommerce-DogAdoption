@@ -234,25 +234,11 @@ const ProductManagement = () => {
         {products.map((product) => (
           <div key={product._id} style={styles.productCard}>
             <div>
-              {product.image ? (
                 <img
                   src={`${product.image}`}
                   alt={product.name}
                   style={styles.productImage}
-                />
-              ) : (
-                <div
-                  style={{
-                    ...styles.productImage,
-                    backgroundColor: "#f0f0f0",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  No Image Available
-                </div>
-              )}
+                />              
             </div>
             <h3 style={styles.productName}>{product.name}</h3>
             <p style={styles.productDescription}>{product.description}</p>

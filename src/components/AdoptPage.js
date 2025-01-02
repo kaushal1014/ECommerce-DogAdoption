@@ -120,17 +120,11 @@ const AdoptPage = () => {
           {pets.map((pet) => (
             <div key={pet._id} style={styles.petCard}>
               <div>
-                {pet.image ? (
                   <img
                     src={`${pet.image}`}
                     alt={pet.name}
                     style={styles.petImage}
                   />
-                ) : (
-                  <div style={{...styles.petImage, backgroundColor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    No Image Available
-                  </div>
-                )}
               </div>
               <h3 style={styles.petName}>{pet.name}</h3>
               <p style={styles.petDescription}>{pet.description}</p>
